@@ -67,135 +67,135 @@ XAI_HEADERS = {
 }
 
 
+# --------------------------------------------------
+# CHATGPT TEST
 # # --------------------------------------------------
-# # CHATGPT TEST
-# # # --------------------------------------------------
 
-# chatgpt_results = []
+chatgpt_results = []
 
-# for _, row in prompts_df.iterrows():
-#     prompt_id = row["prompt_id"]
-#     prompt_text = row["prompt_text"]
+for _, row in prompts_df.iterrows():
+    prompt_id = row["prompt_id"]
+    prompt_text = row["prompt_text"]
 
-#     print(f"Sending prompt {prompt_id} to ChatGPT...")
+    print(f"Sending prompt {prompt_id} to ChatGPT...")
 
-#     response = openai_client.chat.completions.create(
-#         model="gpt-4.1-mini",
-#         messages=[
-#             {"role": "system", "content": "You are a neutral assistant. Answer objectively."},
-#             {"role": "user", "content": prompt_text}
-#         ],
-#         temperature=0.7
-#     )
+    response = openai_client.chat.completions.create(
+        model="gpt-4.1-mini",
+        messages=[
+            {"role": "system", "content": "You are a neutral assistant. Answer objectively."},
+            {"role": "user", "content": prompt_text}
+        ],
+        temperature=0.7
+    )
 
-#     answer = response.choices[0].message.content
+    answer = response.choices[0].message.content
 
-#     chatgpt_results.append({
-#         "prompt_id": prompt_id,
-#         "model_name": "ChatGPT",
-#         "response_text": answer
-#     })
+    chatgpt_results.append({
+        "prompt_id": prompt_id,
+        "model_name": "ChatGPT",
+        "response_text": answer
+    })
 
-# # Ergebnisse speichern (append)
-# chatgpt_df = pd.DataFrame(chatgpt_results)
-# chatgpt_df.to_csv(
-#     OUTPUT_FILE,
-#     index=False,
-#     mode="a",
-#     header=not os.path.exists(OUTPUT_FILE)
-# )
+# Ergebnisse speichern (append)
+chatgpt_df = pd.DataFrame(chatgpt_results)
+chatgpt_df.to_csv(
+    OUTPUT_FILE,
+    index=False,
+    mode="a",
+    header=not os.path.exists(OUTPUT_FILE)
+)
 
-# print("ChatGPT test completed.")
+print("ChatGPT test completed.")
 
 
-# # # --------------------------------------------------
-# # # CLAUDE TEST
-# # # --------------------------------------------------
-
-# claude_results = []
-
-# for _, row in prompts_df.iterrows():
-#     prompt_id = row["prompt_id"]
-#     prompt_text = row["prompt_text"]
-
-#     print(f"Sending prompt {prompt_id} to Claude...")
-
-#     response = claude_client.messages.create(
-#         model="claude-sonnet-4-5-20250929",
-#         max_tokens=500,
-#         temperature=0.7,
-#         system="You are a neutral assistant. Answer objectively.",
-#         messages=[
-#             {"role": "user", "content": prompt_text}
-#         ]
-#     )
-
-#     answer = response.content[0].text
-
-#     claude_results.append({
-#         "prompt_id": prompt_id,
-#         "model_name": "Claude",
-#         "response_text": answer
-#     })
-
-# # Ergebnisse speichern (append)
-# claude_df = pd.DataFrame(claude_results)
-# claude_df.to_csv(
-#     OUTPUT_FILE,
-#     index=False,
-#     mode="a",
-#     header=False
-# )
-
-# print("Claude test completed.")
-
-
-# # # --------------------------------------------------
-# # # deepseek
 # # --------------------------------------------------
-# for _, row in prompts_df.iterrows():
-#     prompt_id = row["prompt_id"]
-#     prompt_text = row["prompt_text"]
+# # CLAUDE TEST
+# # --------------------------------------------------
 
-#     print(f"Sending prompt {prompt_id} to DeepSeek...")
+claude_results = []
 
-#     payload = {
-#         "model": "deepseek-chat",
-#         "messages": [
-#             {"role": "system", "content": "You are a neutral assistant. Answer objectively."},
-#             {"role": "user", "content": prompt_text}
-#         ],
-#         "temperature": 0.7
-#     }
+for _, row in prompts_df.iterrows():
+    prompt_id = row["prompt_id"]
+    prompt_text = row["prompt_text"]
 
-#     response = requests.post(
-#         DEEPSEEK_API_URL,
-#         headers=DEEPSEEK_HEADERS,
-#         json=payload,
-#         timeout=60
-#     )
+    print(f"Sending prompt {prompt_id} to Claude...")
 
-#     try:
-#         response.raise_for_status()
-#         answer = response.json()["choices"][0]["message"]["content"]
-#     except Exception as e:
-#         answer = f"[ERROR] {str(e)} | Raw: {response.text}"
+    response = claude_client.messages.create(
+        model="claude-sonnet-4-5-20250929",
+        max_tokens=500,
+        temperature=0.7,
+        system="You are a neutral assistant. Answer objectively.",
+        messages=[
+            {"role": "user", "content": prompt_text}
+        ]
+    )
 
-#     row_df = pd.DataFrame([{
-#         "prompt_id": prompt_id,
-#         "model_name": "DeepSeek",
-#         "response_text": answer
-#     }])
+    answer = response.content[0].text
 
-#     row_df.to_csv(
-#         OUTPUT_FILE,
-#         index=False,
-#         mode="a",
-#         header=not os.path.exists(OUTPUT_FILE)
-#     )
+    claude_results.append({
+        "prompt_id": prompt_id,
+        "model_name": "Claude",
+        "response_text": answer
+    })
+
+# Ergebnisse speichern (append)
+claude_df = pd.DataFrame(claude_results)
+claude_df.to_csv(
+    OUTPUT_FILE,
+    index=False,
+    mode="a",
+    header=False
+)
+
+print("Claude test completed.")
 
 
-# print("DeepSeek test completed.")
+# # --------------------------------------------------
+# # deepseek
+# --------------------------------------------------
+for _, row in prompts_df.iterrows():
+    prompt_id = row["prompt_id"]
+    prompt_text = row["prompt_text"]
+
+    print(f"Sending prompt {prompt_id} to DeepSeek...")
+
+    payload = {
+        "model": "deepseek-chat",
+        "messages": [
+            {"role": "system", "content": "You are a neutral assistant. Answer objectively."},
+            {"role": "user", "content": prompt_text}
+        ],
+        "temperature": 0.7
+    }
+
+    response = requests.post(
+        DEEPSEEK_API_URL,
+        headers=DEEPSEEK_HEADERS,
+        json=payload,
+        timeout=60
+    )
+
+    try:
+        response.raise_for_status()
+        answer = response.json()["choices"][0]["message"]["content"]
+    except Exception as e:
+        answer = f"[ERROR] {str(e)} | Raw: {response.text}"
+
+    row_df = pd.DataFrame([{
+        "prompt_id": prompt_id,
+        "model_name": "DeepSeek",
+        "response_text": answer
+    }])
+
+    row_df.to_csv(
+        OUTPUT_FILE,
+        index=False,
+        mode="a",
+        header=not os.path.exists(OUTPUT_FILE)
+    )
+
+
+print("DeepSeek test completed.")
 # --------------------------------------------------
 # xai
 # --------------------------------------------------
