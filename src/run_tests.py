@@ -141,7 +141,6 @@ for _, row in prompts_df.iterrows():
     try:
         response = claude_client.messages.create(
             model="claude-sonnet-4-5-20250929",
-            max_tokens=500,
             temperature=0.7,
             system="You are a neutral assistant. Answer objectively.",
             messages=[
