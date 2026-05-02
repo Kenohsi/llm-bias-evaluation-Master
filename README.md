@@ -119,8 +119,36 @@ jupyter notebook analysis/analysis.ipynb
 
 ---
 
+## Debiasing Implementation
+
+Als praktisches Implementierungsbeispiel (Kap. 4) enthält das Repo ein vollständiges
+**Hard-Debiasing-Modul** nach Bolukbasi et al. (2016, NeurIPS):
+
+```
+debiasing/
+├── debias_embeddings.py   # Kernalgorithmus: identify_bias_subspace / neutralize / equalize
+├── demo_debiasing.py      # Synthetische Verifikation (~1 Sekunde, deterministisch)
+├── plot_debiasing.py      # Visualisierung → results/debiasing_synthetic.png
+├── debiasing_word2vec.py  # Anwendung auf word2vec-google-news-300
+└── results/               # CSV, PNG, Markdown-Tabelle
+```
+
+**Gemessene Ergebnisse (word2vec-google-news-300, 3 Mio. Vokabeln):**
+
+| Metrik | Vorher | Nachher | Reduktion |
+|--------|--------|---------|-----------|
+| DirectBias | 0.1596 | 0.0000 | 100 % |
+| WEAT-Effektgröße d | 0.6406 | 0.4939 | 22.9 % |
+
+Berufe mit größter Bias-Verschiebung: *homemaker* (0.311), *nurse* (0.304), *socialite* (0.290).
+
+Weitere Details und Reproduktionsanleitung: [`debiasing/README.md`](debiasing/README.md)
+
+---
+
 ## Literatur (Auswahl)
 
+- Bolukbasi, T., Chang, K.-W., Zou, J., Saligrama, V., & Kalai, A. (2016). Man is to Computer Programmer as Woman is to Homemaker? Debiasing Word Embeddings. *NeurIPS 29*. https://arxiv.org/abs/1607.06520
 - Floridi, L., & Cowls, J. (2019). A unified framework of five principles for AI in society. *Harvard Data Science Review*, 1(1). https://doi.org/10.1162/99608f92.8cd550d1
 - Nielsen, A. (2020). *Practical Fairness*. O'Reilly Media.
 - Ouyang, L. et al. (2022). Training language models to follow instructions with human feedback. *NeurIPS 35*, 27730–27744.
