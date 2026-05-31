@@ -13,7 +13,7 @@ Dieses Repository enthält den vollständigen Quellcode, die Rohdaten und die An
 **Untersuchte Modelle:**
 | Modell | Anbieter | Version |
 |--------|----------|---------|
-| ChatGPT | OpenAI | GPT-4.1-mini |
+| ChatGPT | OpenAI | GPT-4o |
 | Claude | Anthropic | Claude Sonnet |
 | DeepSeek | DeepSeek AI | deepseek-chat |
 | Grok | xAI | grok-4 |
